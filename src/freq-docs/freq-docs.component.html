@@ -1,0 +1,30 @@
+<!-- {{ demoForm.value | json }} -->
+<form [formGroup]="demoForm">
+  <ng-container formArrayName="docs">
+    <ng-container *ngFor="let doc of docs.controls; let i = index">
+      <div class="row" [formGroupName]="i">
+        <div class="form-group col-md-4">
+          <label>Title</label>
+          <input formControlName="title" type="text" class="form-control" />
+        </div>
+        <div class="form-group col-md-4">
+          <label>Upload Pdf</label>
+          <input
+            formControlName="file"
+            type="file"
+            (change)="upload($event, i)"
+            accept=".pdf"
+            class="form-control"
+          />
+        </div>
+        <div class="col-md-4">
+          <button class="btn btn-danger" (click)="remove(i)">Delete</button>
+          &nbsp;
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+  <br />
+  <button class="btn btn-primary" (click)="addDoc()">add</button> &nbsp;
+  <button class="btn btn-primary" type="submit" (click)="onSave()">Save</button>
+</form>
