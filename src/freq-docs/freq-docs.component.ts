@@ -1,21 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
-
+import { FormBuilder, FormArray } from '@angular/forms';
 
 @Component({
   selector: 'app-freq-docs',
   templateUrl: './freq-docs.component.html',
-  styleUrls: ['./freq-docs.component.css']
+  styleUrls: ['./freq-docs.component.scss'],
 })
 export class FreqDocsComponent implements OnInit {
   file: any = null;
   demoForm = this.fb.group({
-    docs: this.fb.array([])
-  })
+    docs: this.fb.array([]),
+  });
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder) {}
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   get docs() {
     return this.demoForm.controls['docs'] as FormArray;
@@ -24,20 +23,21 @@ export class FreqDocsComponent implements OnInit {
   addDoc() {
     const docForm = this.fb.group({
       title: [''],
-      file: ['']
-    })
-    this.docs.push(docForm)
+      file: [''],
+    });
+    this.docs.push(docForm);
   }
 
   remove(i: number) {
-    this.docs.removeAt(i)
+    this.docs.removeAt(i);
   }
 
-  upload(event: any, index: number) {
+  upload(event: any, index: number): void {
     let fileName = event.target.files[0].name;
+    this.docs.controls[index].patchValue({ file: fileName });
   }
 
   onSave() {
-    console.log(this.demoForm.value)
+    console.log(this.demoForm.value);
   }
 }
